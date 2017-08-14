@@ -1,5 +1,2 @@
-<<<<<<< HEAD
-thông tin m?i
+thÃ´ng tin m?i
 dong thu 2
-=======
->>>>>>> parent of 1fc8037... test change
