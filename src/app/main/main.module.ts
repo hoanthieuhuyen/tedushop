@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
 import { mainRoutes } from './main.routers';
 import { RouterModule } from '@angular/router';
-import {HomeModule} from './home/home.module';
+import { UserModule } from './user/user.module';
+import { HomeModule } from './home/home.module';
 @NgModule({
   imports: [
     CommonModule,
+    UserModule,
     HomeModule,
     RouterModule.forChild(mainRoutes)
   ],
