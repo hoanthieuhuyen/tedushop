@@ -45,7 +45,15 @@ export class DataService {
   public handleError(error: any) {
     if (error.status == 401) {
       localStorage.removeItem(SystemConstants.CURRENT_USER);
-      this._no
+      this._notificationService.printErrorMessage(MessageConstants.LOGIN_AGAIN_MSG);
+      this._utilityService.navigateToLogin();
+    }
+    else{
+      let errMsg=(error.message)?error.message:
+      error.status? '${error.status} - ${error.statusText}':'Lỗi hệ thống';
+      this._notificationService.printErrorMessage(errMsg);
+
+      return Observable.throw(errMsg);
     }
   }
 }
