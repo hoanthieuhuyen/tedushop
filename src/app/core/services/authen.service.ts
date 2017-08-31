@@ -18,7 +18,7 @@ export class AuthenService {
 
     return this._http.post(SystemConstants.BASE_API + '/api/oauth/token', body, options).map((response: Response) => {
       let user: LoggedInUser = response.json();
-      if (user && user.assess_token) {
+      if (user && user.access_token) {
         localStorage.removeItem(SystemConstants.CURRENT_USER);
         localStorage.setItem(SystemConstants.CURRENT_USER, JSON.stringify(user));
       }
@@ -39,7 +39,7 @@ export class AuthenService {
     let user: LoggedInUser;
     if (this.isUserAuthenticated) {
       var userData = JSON.parse(localStorage.getItem(SystemConstants.CURRENT_USER));
-      user = new LoggedInUser(userData.assess_token, userData.username, userData.fullname, userData.email, userData.avatar);
+      user = new LoggedInUser(userData.access_token, userData.username, userData.fullname, userData.email, userData.avatar,userData.roles,userData.permissions);
     }
     else
       user = null;

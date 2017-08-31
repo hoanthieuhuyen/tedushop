@@ -1,15 +1,20 @@
 export class LoggedInUser {
-    constructor(assess_token: string, username: string, fullname: string, email: string, avatar: string) {
-        this.assess_token = assess_token;
-        this.fullname = fullname;
+    constructor(access_token: string, username: string, fullName: string, email: string, avatar: string,roles:any,permissions:any
+    ) {
+        this.access_token = access_token;
+        this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.avatar = avatar;
+        this.roles = roles;
+        this.permissions = permissions;
     }
     public id: string;
-    public assess_token: string;
+    public access_token: string;
     public username: string;
-    public fullname: string;
+    public fullName: string;
     public email: string;
     public avatar: string;
+    public permissions:any;
+    public roles: any;
 }
