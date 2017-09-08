@@ -1,14 +1,14 @@
 <div class="page-title">
   <div class="title_left">
-    <h3>Danh sách quyền</h3>
+    <h3>Danh sách nhóm quyền</h3>
   </div>
 
   <div class="title_right">
     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Nhập tên quyền...">
+        <input type="text" class="form-control" (keyup.enter)="loadData()" [(ngModel)]="filter" name="filter" placeholder="Nhập tên nhóm...">
         <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Tìm!</button>
+            <button class="btn btn-default" (click)="loadData()" type="button">Tìm!</button>
           </span>
       </div>
     </div>
@@ -23,7 +23,7 @@
       <div class="x_title">
         <ul class="nav navbar-right panel_toolbox">
           <li>
-          <button class="btn btn-success" (click)="showAddModal()">Thêm mới</button></li>
+            <button class="btn btn-success" (click)="showAddModal()">Thêm mới</button></li>
         </ul>
         <div class="clearfix"></div>
       </div>
@@ -42,8 +42,8 @@
               <td>{{role.Name}}</td>
               <td>{{role.Description}}</td>
               <td>
-                <button class="btn btn-primary"><i class="fa fa-pencil-square-o"></i></button>
-                <button class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                <button class="btn btn-primary" (click)="showEditModal(role.Id)"><i class="fa fa-pencil-square-o"></i></button>
+                <button class="btn btn-danger" (click)="showDeleteModal(role.Id)"><i class="fa fa-trash"></i></button>
               </td>
             </tr>
           </tbody>
@@ -59,7 +59,8 @@
 </div>
 
 <!--Modal add and edit-->
-<div bsModal #modalAddEdit="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div bsModal #modalAddEdit="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -69,8 +70,35 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <form class="form-horizontal form-lable-left" #modalAddForm="ngForm" novalidate (ngSubmit)="saveChange(modalAddForm.valid)"
+          *ngIf="entity">
+          <div class="form-group">
+            <label class="form-lable col-md-3 col-sm-3 col-xs-12">Tên nhóm</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <input type="hidden" [(ngModel)]="entity.Id" name="id">
+              <input class="form-control" type="text" [(ngModel)]="entity.Name" #name="ngModel" name="name" required minlength="3">
+              <small [hidden]="name.valid || (name.pristine && !modalAddForm.submitted)" class="text-danger">
+                Bạn phải nhập tên ít nhất 3 ký tự
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-lable col-md-3 col-sm-3 col-xs-12">Mô tả</label>
+            <div class="col-md-9 col-sm-9 col-xs-12">
+              <textarea class="form-control" [(ngModel)]="entity.Description" #description="ngModel" name="description" required rows="3"></textarea>
+              <small [hidden]="description.valid || (description.pristine && !modalAddForm.submitted)" class="text-danger">
+                Bạn phải nhập mô tả
+              </small>
+            </div>
+          </div>
+          <div class="ln_solid"></div>
+          <div class="form-group">
+            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+              <button type="button" class="btn btn-primary" (click)="modalAddEdit.hide()">Hủy bỏ</button>
+              <button type="submit" class="btn btn-success" [disabled]="!modalAddForm.valid">Cập nhật</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-</div>
